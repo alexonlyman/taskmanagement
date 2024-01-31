@@ -16,6 +16,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * registration and authentication class
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -30,7 +33,10 @@ public class AuthService {
 
     private final AuthenticationManager manager;
 
-
+    /**
+     * registers a user with parameters from dto,
+     * converting to entity and saving in repository
+     */
     public AuthenticationResponse register(Register register) {
         logger.info("register data " + register);
         User user = User.builder()
@@ -46,7 +52,10 @@ public class AuthService {
                 .build();
 
     }
-
+    /**
+     * user authentication using registration parameters,
+     * converting to dto and generating jwt token
+     */
     public AuthenticationResponse authentication(Register register) throws WrongLoginPasswordExeption {
         logger.info("authentication data "+ register);
         manager.authenticate(

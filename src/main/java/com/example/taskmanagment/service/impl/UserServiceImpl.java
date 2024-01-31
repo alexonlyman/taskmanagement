@@ -18,7 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
+/**
+ * class for working with users
+ */
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
@@ -32,7 +34,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.userConvertor = userConvertor;
     }
 
-
+    /**
+     * Updates user information based on the transmitted data.
+     */
     @Transactional
     @Override
     public UpdateUser updateUserInfo(UpdateUser updateUser) {
@@ -51,13 +55,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     }
-
+    /**
+     * Gets the names of all users for possible appointment of an executor
+     */
     public List<String> getNamesOfAllUsers() {
         List<UserEntity> list = userRepo.findAll();
         return list.stream().map(UserEntity::getFirstName).collect(Collectors.toList());
 
     }
-
+    /**
+     * Gets the name of the currently authenticated user
+     */
 
     public String getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -66,7 +74,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     }
-
+    /**
+     * Loads the user by his email for authentication
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UserEmailNotFoundExeption {
         UserEntity user = userRepo.findUserByEmail(email);
